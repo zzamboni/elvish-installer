@@ -31,3 +31,11 @@ jobs:
           }
         shell:
           elvish {0}
+
+      - name: Get latest Elvish issues
+        shell: elvish {0}
+        run: |
+          curl -s https://api.github.com/repos/elves/elvish/issues |
+          from-json | all (one) |
+          each [issue]{ echo $issue[number]: $issue[title] } |
+          head -n 11
