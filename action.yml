@@ -48,5 +48,5 @@ runs:
               ;;
           esac
         fi
-        wget -q -O ${elvish_dest} https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
-        chmod a+rx ${elvish_dest}
+        sudo wget -q -O ${elvish_dest} https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
+        sudo chmod a+rx ${elvish_dest}
