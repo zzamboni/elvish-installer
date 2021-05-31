@@ -48,6 +48,7 @@ runs:
               ;;
           esac
         fi
+        echo "Downloading https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext} into ${elvish_dest}"
         sudo wget -q -O ${elvish_dest} https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
         sudo chmod a+rx ${elvish_dest}
 
