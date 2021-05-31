@@ -5,12 +5,15 @@ jobs:
   test-elvish-installer:
     runs-on: ${{ matrix.os }}
     strategy:
+      max-parallel: 1
       matrix:
         os: [ubuntu-18.04, ubuntu-20.04, macos-10.15]
         version: [HEAD, v0.15.0]
     steps:
       - name: Install Elvish ${{ matrix.version }} on ${{ matrix.os }}
         uses: zzamboni/elvish-installer@main
+        with:
+          version: ${{ matrix.version }}
 
       - name: Test Elvish ${{ matrix.version }} on ${{ matrix.os }}
         run: |
