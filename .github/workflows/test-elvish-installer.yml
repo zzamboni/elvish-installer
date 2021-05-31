@@ -16,6 +16,18 @@ jobs:
 
       - name: Test Elvish ${{ matrix.version }} on ${{ matrix.os }}
         run: |
+          use re
+          echo "Output of elvish -buildinfo:"
           elvish -buildinfo
+          echo "Checking that installed version matches ${{ matrix.version }}..."
+          pattern = "^${{ matrix.version }}$"
+          if (==s ${{ matrix.version }} HEAD) { pattern = "^v.*-dev.*" }
+          installed-version = (elvish -buildinfo -json | from-json)[version]
+          if (re:match $pattern $installed-version) {
+            echo "OK!"
+          } else {
+            echo "::error::Version mismatch - expected ${{ matrix.version }}, got "$installed-version
+            exit 1
+          }
         shell:
           elvish {0}
