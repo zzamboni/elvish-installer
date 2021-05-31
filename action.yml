@@ -50,3 +50,7 @@ runs:
         fi
         sudo wget -q -O ${elvish_dest} https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
         sudo chmod a+rx ${elvish_dest}
+
+branding:
+  icon: chevron-right
+  color: green
