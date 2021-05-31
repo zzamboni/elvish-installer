@@ -1,0 +1,50 @@
+name: "Elvish installer"
+description: "Install the Elvish shell in your Linux runner."
+author: "Diego Zamboni <diego@zzamboni.org>"
+inputs:
+  version:
+    description: "Elvish version to install"
+    required: false
+    default: "HEAD"
+  binary_name:
+    description:
+      "The name to give to the installed Elvish binary."
+    required: false
+    default: "elvish"
+  binary_dir:
+    description:
+      "The path where to install the Elvish binary."
+    required: false
+    default: "/usr/local/bin"
+  architecture:
+    description:
+      "Architecture for which to fetch the binary. Defaults to 'auto' (install
+      according to the runner architecture) but you can specify one of
+      linux-amd64, darwin-amd64, freebsd-amd64, netbsd-amd64, openbsd-amd64,
+      windows-amd64, linux-386, windows-386, linux-arm64, darwin-arm64."
+    required: false
+    default: "auto"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Elvish
+      shell: bash
+      run: |
+        elvish_arch = "${{ inputs.architecture }}"
+        elvish_ext = ""
+        if [[ "${{ inputs.architecture }}" == "auto" ]]; then
+          case "${{ runner.os }}" in
+            Linux)
+              elvish_arch = "linux-amd64"
+              ;;
+            Windows)
+              elvish_arch = "windows-amd64"
+              elvish_ext = ".exe"
+              ;;
+            macOS)
+              elvish_arch = "darwin-amd64"
+              ;;
+          esac
+        fi
+        wget -q -O ${{ inputs.binary_dir }}/${{ inputs.binary_name }} https://dl.elv.sh/$elvish_arch/elvish-${{ inputs.version }}$elvish_ext
