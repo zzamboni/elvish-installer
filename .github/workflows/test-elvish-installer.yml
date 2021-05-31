@@ -1,0 +1,15 @@
+name: Test Elvish installer
+on: push
+
+jobs:
+  post750words:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Elvish HEAD
+        uses: zzamboni/elvish-installer@main
+
+      - name: Test Elvish HEAD
+        run: |
+          elvish -buildinfo
+        shell:
+          elvish {0}
