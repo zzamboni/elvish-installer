@@ -8,7 +8,7 @@ You can install Elvish HEAD (latest version from git) as follows:
 
 #+begin_src yaml
 steps:
-  - uses: zzamboni/elvish-installer@v1.0
+  - uses: zzamboni/elvish-installer@v1
 #+end_src
 
 You can then write further action steps using the Elvish language (example from [[https://elv.sh/][the Elvish webpage]]). Don't forget to specify =shell: elvish {0}=:
