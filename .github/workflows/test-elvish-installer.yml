@@ -3,12 +3,16 @@ on: push
 
 jobs:
   test-elvish-installer:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04, macos-10.15]
+        version: [HEAD, v0.15.0]
     steps:
-      - name: Install Elvish HEAD
+      - name: Install Elvish ${{ matrix.version }} on ${{ matrix.os }}
         uses: zzamboni/elvish-installer@main
 
-      - name: Test Elvish HEAD
+      - name: Test Elvish ${{ matrix.version }} on ${{ matrix.os }}
         run: |
           elvish -buildinfo
         shell:
