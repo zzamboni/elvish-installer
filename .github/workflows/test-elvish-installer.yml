@@ -12,7 +12,8 @@ jobs:
       - name: Testing Windows environment
         shell: bash
         run: |
-          echo $PATH
+          echo PATH=$PATH
+          echo runner.tool_cache=${{ runner.tool_cache }}
 
       - name: Install Elvish ${{ matrix.version }} on ${{ matrix.os }}
         uses: zzamboni/elvish-installer@main
