@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Install Elvish ${{ matrix.version }} on ${{ matrix.os }}
         uses: zzamboni/elvish-installer@main
+        with:
+          version: ${{ matrix.version }}
 
       - name: Test Elvish ${{ matrix.version }} on ${{ matrix.os }}
         run: |
