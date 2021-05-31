@@ -2,7 +2,7 @@ name: Test Elvish installer
 on: push
 
 jobs:
-  post750words:
+  test-elvish-installer:
     runs-on: ubuntu-latest
     steps:
       - name: Install Elvish HEAD
