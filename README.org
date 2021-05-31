@@ -1,3 +1,34 @@
 #+TITLE: Elvish Installer GitHub Action
 
-A GitHub action that installs Elvish on your current runner, so you can use Elvish scripts within your workflow.
+A GitHub action that installs the [[https://elv.sh/][Elvish shell]] on your current runner, so you can use Elvish scripts within your workflow.
+
+* Use
+
+You can install Elvish HEAD (latest version from git) as follows:
+
+#+begin_src yaml
+steps:
+  - uses: zzamboni/elvish-installer@v1.0
+#+end_src
+
+You can then write further action steps using the Elvish language (example from [[https://elv.sh/][the Elvish webpage]]). Don't forget to specify =shell: elvish {0}=:
+
+#+begin_src yaml
+steps:
+  - name: Get latest Elvish issues
+    shell: elvish {0}
+    run: |
+      curl -s https://api.github.com/repos/elves/elvish/issues |
+      from-json | all (one) |
+      each [issue]{ echo $issue[number]: $issue[title] } |
+      head -n 11
+#+end_src
+
+* Arguments
+
+By default, the Elvish HEAD version for the architecture of your runner is installed as =/usr/local/bin/elvish= (only Linux and macOS are supported at the moment, patches for Windows welcome). However, you can explicitly request other versions, architectures or install locations by specifying the following arguments:
+
+- =version= (default: =HEAD=). You can specify any version of Elvish listed at https://elv.sh/get/ (including old versions, see the bottom of the page). You must specify the version number starting with "v", for example ="v0.15.0"=).
+- =architecture= (default: =auto=). Default value installs according to the runner architecture, but you can specify one of =linux-amd64=, =darwin-amd64=, =freebsd-amd64=, =netbsd-amd64=, =openbsd-amd64=, =windows-amd64=, =linux-386=, =windows-386=, =linux-arm64=, =darwin-arm64= (note: not all versions exist for all architectures, the action uses the prebuilt binaries from https://elv.sh/get/).
+- =binary_name= (default: =elvish=). Name with which the binary should be created.
+- =binary_dir= (default: =/usr/local/bin/=)): Directory where the binary should be stored.
