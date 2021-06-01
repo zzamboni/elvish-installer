@@ -1,5 +1,5 @@
 name: "Elvish installer"
-description: "Install the Elvish shell in your Linux runner."
+description: "Install the Elvish shell in your Linux, macOS or Windows runner, allowing you to write your workflow scripts using the Elvish language."
 author: "Diego Zamboni <diego@zzamboni.org>"
 inputs:
   version:
