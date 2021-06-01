@@ -32,7 +32,7 @@ jobs:
         shell: bash
         run: |
           mkdir "/c/Program Files/Elvish"
-          wget -O "/c/Program Files/Elvish/elvish" "https://dl.elv.sh/windows-amd64/elvish-HEAD.exe"
+          curl -o "/c/Program Files/Elvish/elvish" "https://dl.elv.sh/windows-amd64/elvish-HEAD.exe"
           echo 'C:\Program Files\Elvish' >> $GITHUB_PATH
       - name: Check path
         shell: bash
