@@ -75,9 +75,9 @@ runs:
         elvish_dest="${binary_dir}/${{ inputs.binary_name }}${elvish_ext}"
         echo "Downloading https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext} into ${elvish_dest}"
         $SUDO mkdir -p "${binary_dir}"
-        echo curl -o "${elvish_dest}" https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
-        $SUDO curl -o "${elvish_dest}" https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
-        $SUDO chmod a+rx ${elvish_dest}
+        echo curl -o "${elvish_dest}" "https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}"
+        $SUDO curl -o "${elvish_dest}" "https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}"
+        $SUDO chmod a+rx "${elvish_dest}"
         echo "${binary_dir}" >> $GITHUB_PATH
 
 branding:
