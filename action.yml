@@ -3,24 +3,25 @@ description: "Install the Elvish shell in your runner, allowing you to write you
 author: "Diego Zamboni <diego@zzamboni.org>"
 inputs:
   version:
-    description: "Elvish version to install"
+    description: "Elvish version to install. Default: 'HEAD'."
     required: false
     default: "HEAD"
   binary_name:
     description:
-      "The name to give to the installed Elvish binary."
+      "The name to give to the installed Elvish binary. Default: 'elvish'. In
+      Windows runners, '.exe' is automatically added to this name."
     required: false
     default: "elvish"
   binary_dir:
     description:
-      "The path where to install the Elvish binary. Defaults to 'auto', which
+      "The path where to install the Elvish binary. Default: 'auto', which
       installs at /usr/local/bin on Linux/macOS and C:\\Program Files\\Elvish on
       Windows."
     required: false
     default: "auto"
   architecture:
     description:
-      "Architecture for which to fetch the binary. Defaults to 'auto', which
+      "Architecture for which to fetch the binary. Default: 'auto', which
       installs the correct version according to the runner architecture. You can
       manually specify any of the architectures for which Elvish is available
       (see https://dl.elv.sh/)."
