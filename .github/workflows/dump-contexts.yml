@@ -38,3 +38,5 @@ jobs:
         shell: bash
         run: |
           echo PATH=$PATH
+          ls "/c/Program Files/Elvish"
+          elvish -buildinfo
