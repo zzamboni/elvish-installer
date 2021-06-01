@@ -20,10 +20,10 @@ inputs:
     default: "auto"
   architecture:
     description:
-      "Architecture for which to fetch the binary. Defaults to 'auto' (install
-      according to the runner architecture) but you can specify one of
-      linux-amd64, darwin-amd64, freebsd-amd64, netbsd-amd64, openbsd-amd64,
-      windows-amd64, linux-386, windows-386, linux-arm64, darwin-arm64."
+      "Architecture for which to fetch the binary. Defaults to 'auto', which
+      installs the correct version according to the runner architecture. You can
+      manually specify any of the architectures for which Elvish is available
+      (see https://dl.elv.sh/)."
     required: false
     default: "auto"
 
@@ -75,7 +75,6 @@ runs:
         elvish_dest="${binary_dir}/${{ inputs.binary_name }}${elvish_ext}"
         echo "Downloading https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext} into ${elvish_dest}"
         $SUDO mkdir -p "${binary_dir}"
-        echo curl -o "${elvish_dest}" "https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}"
         $SUDO curl -o "${elvish_dest}" "https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}"
         $SUDO chmod a+rx "${elvish_dest}"
         echo "${binary_dir}" >> $GITHUB_PATH
