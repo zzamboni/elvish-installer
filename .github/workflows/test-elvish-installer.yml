@@ -10,7 +10,7 @@ jobs:
         version: [HEAD, v0.15.0]
     steps:
       - name: Install Elvish ${{ matrix.version }} on ${{ matrix.os }}
-        uses: zzamboni/elvish-installer@main
+        uses: zzamboni/elvish-installer@v1
         with:
           version: ${{ matrix.version }}
 
