@@ -50,7 +50,6 @@ runs:
         # Now determine the architecture to download if not specified
         elvish_arch="${{ inputs.architecture }}"
         elvish_ext=""
-        SUDO="sudo"
         if [[ "${{ inputs.architecture }}" == "auto" ]]; then
           case "${{ runner.os }}" in
             Linux)
@@ -59,7 +58,6 @@ runs:
             Windows)
               elvish_arch="windows-amd64"
               elvish_ext=".exe"
-              SUDO=""
               ;;
             macOS)
               elvish_arch="darwin-amd64"
@@ -67,10 +65,17 @@ runs:
           esac
         fi
 
+        # Check if we need to use sudo to install
+        SUDO="sudo"
+        if [[ "${{ runner.os }}" == "Windows" ]]; then
+          SUDO=""
+        fi
+
         # Finally, download and install in the correct place
         elvish_dest="${binary_dir}/${{ inputs.binary_name }}${elvish_ext}"
         echo "Downloading https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext} into ${elvish_dest}"
-        $SUDO curl -s -o ${elvish_dest} https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
+        echo curl -o "${elvish_dest}" https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
+        $SUDO curl -o "${elvish_dest}" https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
         $SUDO chmod a+rx ${elvish_dest}
 
 branding:
