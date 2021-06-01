@@ -13,9 +13,11 @@ inputs:
     default: "elvish"
   binary_dir:
     description:
-      "The path where to install the Elvish binary."
+      "The path where to install the Elvish binary. Defaults to 'auto', which
+      installs at /usr/local/bin on Linux/macOS and C:\\Program Files\\Elvish on
+      Windows."
     required: false
-    default: "/usr/local/bin"
+    default: "auto"
   architecture:
     description:
       "Architecture for which to fetch the binary. Defaults to 'auto' (install
@@ -31,8 +33,24 @@ runs:
     - name: Install Elvish
       shell: bash
       run: |
+        # Determine the installation dir if the parameter value is "auto",
+        # depending on the runner OS
+        binary_dir="${{ inputs.binary_dir }}"
+        if [[ "${binary_dir}" == "auto" ]]; then
+          case "${{ runner.os }}" in
+            Linux|macOS)
+              binary_dir="/usr/local/bin"
+              ;;
+            Windows)
+              binary_dir='C:\Program Files\Elvish'
+              ;;
+          esac
+        fi
+
+        # Now determine the architecture to download if not specified
         elvish_arch="${{ inputs.architecture }}"
         elvish_ext=""
+        SUDO="sudo"
         if [[ "${{ inputs.architecture }}" == "auto" ]]; then
           case "${{ runner.os }}" in
             Linux)
@@ -41,16 +59,19 @@ runs:
             Windows)
               elvish_arch="windows-amd64"
               elvish_ext=".exe"
+              SUDO=""
               ;;
             macOS)
               elvish_arch="darwin-amd64"
               ;;
           esac
         fi
-        elvish_dest="${{ inputs.binary_dir }}/${{ inputs.binary_name }}${elvish_ext}"
+
+        # Finally, download and install in the correct place
+        elvish_dest="${binary_dir}/${{ inputs.binary_name }}${elvish_ext}"
         echo "Downloading https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext} into ${elvish_dest}"
-        sudo wget -q -O ${elvish_dest} https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
-        sudo chmod a+rx ${elvish_dest}
+        $SUDO curl -s -o ${elvish_dest} https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
+        $SUDO chmod a+rx ${elvish_dest}
 
 branding:
   icon: chevron-right
