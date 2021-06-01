@@ -31,7 +31,6 @@ runs:
     - name: Install Elvish
       shell: bash
       run: |
-        elvish_dest="${{ inputs.binary_dir }}/${{ inputs.binary_name }}"
         elvish_arch="${{ inputs.architecture }}"
         elvish_ext=""
         if [[ "${{ inputs.architecture }}" == "auto" ]]; then
@@ -48,6 +47,7 @@ runs:
               ;;
           esac
         fi
+        elvish_dest="${{ inputs.binary_dir }}/${{ inputs.binary_name }}${elvish_ext}"
         echo "Downloading https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext} into ${elvish_dest}"
         sudo wget -q -O ${elvish_dest} https://dl.elv.sh/${elvish_arch}/elvish-${{ inputs.version }}${elvish_ext}
         sudo chmod a+rx ${elvish_dest}
