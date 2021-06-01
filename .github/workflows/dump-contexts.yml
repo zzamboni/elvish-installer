@@ -31,8 +31,8 @@ jobs:
       - name: Testing extend path on Windows
         shell: bash
         run: |
-          mkdir "/c/Program Files/Elvish"
-          curl -o "/c/Program Files/Elvish/elvish" "https://dl.elv.sh/windows-amd64/elvish-HEAD.exe"
+          mkdir 'C:\Program Files\Elvish'
+          curl -s -o 'C:\Program Files\Elvish\elvish' "https://dl.elv.sh/windows-amd64/elvish-HEAD.exe"
           echo 'C:\Program Files\Elvish' >> $GITHUB_PATH
       - name: Check path
         shell: bash
