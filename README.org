@@ -6,18 +6,20 @@ A GitHub action that installs the [[https://elv.sh/][Elvish shell]] on your curr
 
 * Use
 
-You can install Elvish HEAD (latest version from git) as follows:
+You can install the [[https://elv.sh/get/#installing-an-official-binary][Elvish HEAD version]] (latest from git) as follows:
 
 #+begin_src yaml
 steps:
   - uses: zzamboni/elvish-installer@v1
 #+end_src
 
-You can then write further action steps using the Elvish language (example from [[https://elv.sh/][the Elvish webpage]]). Don't forget to specify =shell: elvish {0}=:
+By default, the Elvish HEAD version for the architecture of your runner is installed as =/usr/local/bin/elvish= in Linux and macOS, and as =C:\Program Files\Elvish\elvish.exe= in Windows runners. The install directory is added to the runner's PATH environment variable, so you can use it in following steps.
+
+You can then write further action steps using the Elvish language by specifying =shell: elvish {0}=. For example (code from [[https://elv.sh/][the Elvish webpage]]):
 
 #+begin_src yaml
 steps:
-  - name: Get latest Elvish issues
+  - name: List latest Elvish issues
     shell: elvish {0}
     run: |
       curl -s https://api.github.com/repos/elves/elvish/issues |
@@ -28,9 +30,9 @@ steps:
 
 * Arguments
 
-By default, the Elvish HEAD version for the architecture of your runner is installed as =/usr/local/bin/elvish= in Linux and macOS, and as =C:\Program Files\Elvish\elvish.exe= in Windows runners. You can explicitly request other versions, architectures or install locations by specifying the following arguments:
+The following arguments are supported to explicitly request other versions, architectures or install locations:
 
 - =version= (default: =HEAD=). You can specify any version of Elvish listed at https://elv.sh/get/ (including old versions, see the bottom of the page). You must specify the version number starting with "v", for example "v0.15.0").
 - =architecture= (default: =auto=). Default value installs according to the runner architecture, but you can specify any of the architectures for which Elvish binaries are available (see the list at https://dl.elv.sh/). Note that not all versions exist for all architectures.
 - =binary_name= (default: =elvish=). Name with which the binary should be created. In Windows runners, =.exe= is automatically added to this name.
-- =binary_dir= (default: =auto=): Directory where the binary should be stored. The default value installs under =/usr/local/bin= in Linux and macOS runners, and under =C:\Program Files\Elvish= in Windows.
+- =binary_dir= (default: =auto=): Directory where the binary should be stored. The default value installs under =/usr/local/bin= in Linux and macOS runners, and under =C:\Program Files\Elvish= in Windows. This directory is automatically added to the runner's PATH environment variable.
